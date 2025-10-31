@@ -139,6 +139,7 @@ export const tileCollections: TileCollection[] = [
 export const fixtureCollections = [
   {
     name: 'Shower Heads',
+    slug: 'shower-heads',
     description: 'Rainfall, handheld, multi-jet configurations.',
     accent: 'Refreshing & Invigorating',
     imageUrl: '/v1756560324/mirage/vwq7ojigriz3i91byaha.jpg',
@@ -151,6 +152,7 @@ export const fixtureCollections = [
   },
   {
     name: 'Faucets',
+    slug: 'faucets',
     description: 'Modern and classic designs in chrome, brushed nickel, and matte black.',
     accent: 'Elegant & Functional',
     imageUrl: '/v1756560432/mirage/wkjngna4niv2jebfz50p.jpg',
@@ -163,6 +165,7 @@ export const fixtureCollections = [
   },
   {
     name: 'Toilet Seats',
+    slug: 'toilet-seats',
     description: 'Soft-close lids, ergonomic shapes, and quick-release hinges.',
     accent: 'Comfort & Convenience',
     imageUrl: '/v1756560502/mirage/yjh7kk3ss2ooqlthdhka.jpg',
@@ -173,6 +176,48 @@ export const fixtureCollections = [
       "Made from high-quality, durable materials",
     ],
   },
+];
+
+export const accessoryCollections = [
+    {
+        name: 'Tile Grouts & Sealants',
+        slug: 'tile-grouts',
+        description: 'High-quality grouts and sealants to ensure a long-lasting and professional finish for your tile installations.',
+        accent: 'Essential for Protection',
+        imageUrl: '/v1756560687/mirage/pcu0gbrxkjj7rlvgba3q.jpg',
+        features: [
+            "Available in a variety of colors to match your tiles",
+            "Resistant to stains, mold, and mildew",
+            "Provides a strong, durable bond",
+            "Easy to apply and clean",
+        ],
+    },
+    {
+        name: 'Edge Trims & Profiles',
+        slug: 'edge-trims',
+        description: 'Give your tile installations a clean, polished look with our range of edge trims and profiles.',
+        accent: 'The Perfect Finish',
+        imageUrl: '/v1755236031/mirage/i09yajzne5jvg6wmlzhi.jpg',
+        features: [
+            "Available in various materials like aluminum, PVC, and stainless steel",
+            "Protects tile edges from chipping and damage",
+            "Creates smooth transitions between different flooring surfaces",
+            "Wide range of styles and finishes",
+        ],
+    },
+    {
+        name: 'Waterproofing Solutions',
+        slug: 'waterproofing-solutions',
+        description: 'Protect your home from water damage with our reliable waterproofing solutions for bathrooms, kitchens, and other wet areas.',
+        accent: 'Ultimate Protection',
+        imageUrl: '/v1756560878/mirage/x7hnvfcddvitocaq9s82.jpg',
+        features: [
+            "Creates a waterproof barrier behind your tiles",
+            "Prevents leaks and moisture damage",
+            "Ideal for showers, bathrooms, and balconies",
+            "Easy to apply before tiling",
+        ],
+    },
 ];
 
 export interface Milestone {

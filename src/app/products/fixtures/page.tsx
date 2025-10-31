@@ -63,6 +63,7 @@ const FixturesPage = () => {
                                 <motion.div
                                     key={index}
                                     className="grid lg:grid-cols-2 gap-16 items-center"
+                                    id={collection.slug}
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }}

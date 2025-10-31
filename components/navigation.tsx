@@ -26,8 +26,24 @@ const Navigation = () => {
             { label: 'Mosaic Tiles', href: '/collection/mosaic-tiles' },
           ]
         },
-        { label: 'Bathroom Fixtures', href: '/products/fixtures' },
-        { label: 'Accessories', href: '/products/accessories' },
+        {
+          label: 'Bathroom Fixtures',
+          href: '/products/fixtures',
+          nestedDropdown: [
+            { label: 'Shower Heads', href: '/products/fixtures#shower-heads' },
+            { label: 'Faucets', href: '/products/fixtures#faucets' },
+            { label: 'Toilet Seats', href: '/products/fixtures#toilet-seats' },
+          ]
+        },
+        { 
+          label: 'Accessories', 
+          href: '/products/accessories',
+          nestedDropdown: [
+            { label: 'Tile Grouts & Sealants', href: '/products/accessories#tile-grouts' },
+            { label: 'Edge Trims & Profiles', href: '/products/accessories#edge-trims' },
+            { label: 'Waterproofing Solutions', href: '/products/accessories#waterproofing-solutions' },
+          ]
+        },
       ]
     },
     { label: 'About', href: '/about' },

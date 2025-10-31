@@ -6,45 +6,7 @@ import Button from '../../../../components/ui/Button';
 import ProductCtaSection from '../../../../components/product-cta-section';
 import { motion } from 'framer-motion';
 import imageLoader from '@/lib/imageLoader';
-
-const accessoryCollections = [
-    {
-        name: 'Tile Grouts & Sealants',
-        description: 'High-quality grouts and sealants to ensure a long-lasting and professional finish for your tile installations.',
-        accent: 'Essential for Protection',
-        imageUrl: '/v1756560687/mirage/pcu0gbrxkjj7rlvgba3q.jpg',
-        features: [
-            "Available in a variety of colors to match your tiles",
-            "Resistant to stains, mold, and mildew",
-            "Provides a strong, durable bond",
-            "Easy to apply and clean",
-        ],
-    },
-    {
-        name: 'Edge Trims & Profiles',
-        description: 'Give your tile installations a clean, polished look with our range of edge trims and profiles.',
-        accent: 'The Perfect Finish',
-        imageUrl: '/v1755236031/mirage/i09yajzne5jvg6wmlzhi.jpg',
-        features: [
-            "Available in various materials like aluminum, PVC, and stainless steel",
-            "Protects tile edges from chipping and damage",
-            "Creates smooth transitions between different flooring surfaces",
-            "Wide range of styles and finishes",
-        ],
-    },
-    {
-        name: 'Waterproofing Solutions',
-        description: 'Protect your home from water damage with our reliable waterproofing solutions for bathrooms, kitchens, and other wet areas.',
-        accent: 'Ultimate Protection',
-        imageUrl: '/v1756560878/mirage/x7hnvfcddvitocaq9s82.jpg',
-        features: [
-            "Creates a waterproof barrier behind your tiles",
-            "Prevents leaks and moisture damage",
-            "Ideal for showers, bathrooms, and balconies",
-            "Easy to apply before tiling",
-        ],
-    },
-];
+import { accessoryCollections } from '@/lib/data';
 
 const AccessoriesPage = () => {
     const heroImageUrl = imageLoader({ src: '/v1756416003/mirage/lc4oopinxjtqckrltt9s.jpg', width: 1920 });
@@ -98,6 +60,7 @@ const AccessoriesPage = () => {
                                 <motion.div
                                     key={index}
                                     className="grid lg:grid-cols-2 gap-16 items-center"
+                                    id={collection.slug}
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }}
