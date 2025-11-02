@@ -4,6 +4,7 @@ import Navigation from '../../../components/navigation';
 import Footer from '../../../components/footer';
 import imageLoader from '@/lib/imageLoader';
 import { motion } from 'framer-motion';
+import { FormEvent, useState } from 'react';
 
 const ContactPage = () => {
   const heroImageUrl = imageLoader({ src: '/v1755236122/mirage/fv7qgb3ihskuxhus2mkm.jpg', width: 1920 });
@@ -24,6 +25,94 @@ const ContactPage = () => {
       href: "https://maps.app.goo.gl/ne3Dboem7eWJadXV8"
     }
   ];
+
+  // Form state
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: ''
+  });
+
+  // Submission states
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+
+  // Validation
+  const validateForm = () => {
+    if (!formData.firstName.trim()) {
+      setSubmitError('First name is required');
+      return false;
+    }
+    if (!formData.lastName.trim()) {
+      setSubmitError('Last name is required');
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setSubmitError('Email is required');
+      return false;
+    }
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setSubmitError('Please enter a valid email address');
+      return false;
+    }
+    if (!formData.message.trim()) {
+      setSubmitError('Message is required');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (form: FormEvent<HTMLFormElement>) => {
+    form.preventDefault();
+    setSubmitError('');
+    setSubmitSuccess(false);
+
+    // Validate form
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('http://mfss.aptusagency.com/submit/5BM7Q3Hqy4', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      // Success - reset form and show success message
+      setSubmitSuccess(true);
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        message: ''
+      });
+    } catch (error) {
+      setSubmitError('Failed to send message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   return (
     <>
@@ -91,7 +180,25 @@ const ContactPage = () => {
 
               {/* Contact Form */}
               <div className="card-luxury p-8">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  {/* Success Message */}
+                  {submitSuccess && (
+                    <div className="p-4 bg-gold/10 border border-gold rounded-md">
+                      <p className="text-gold text-body">
+                        Thank you! Your message has been sent successfully. We&apos;ll get back to you soon.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Error Message */}
+                  {submitError && (
+                    <div className="p-4 bg-red-500/10 border border-red-500 rounded-md">
+                      <p className="text-red-500 text-body">
+                        {submitError}
+                      </p>
+                    </div>
+                  )}
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label className="text-small text-text-secondary uppercase tracking-wide mb-3 block">
@@ -99,7 +206,11 @@ const ContactPage = () => {
                       </label>
                       <input
                         type="text"
-                        className="w-full bg-transparent border border-gold outline-none px-4 py-3 text-foreground transition-colors duration-300 rounded-md"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        disabled={isSubmitting}
+                        className="w-full bg-transparent border border-gold outline-none px-4 py-3 text-foreground transition-colors duration-300 rounded-md disabled:opacity-50"
                       />
                     </div>
                     <div>
@@ -108,7 +219,11 @@ const ContactPage = () => {
                       </label>
                       <input
                         type="text"
-                        className="w-full bg-transparent border border-gold outline-none px-4 py-3 text-foreground transition-colors duration-300 rounded-md"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        disabled={isSubmitting}
+                        className="w-full bg-transparent border border-gold outline-none px-4 py-3 text-foreground transition-colors duration-300 rounded-md disabled:opacity-50"
                       />
                     </div>
                   </div>
@@ -119,7 +234,11 @@ const ContactPage = () => {
                     </label>
                     <input
                       type="email"
-                      className="w-full bg-transparent border border-gold outline-none px-4 py-3 text-foreground transition-colors duration-300 rounded-md"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full bg-transparent border border-gold outline-none px-4 py-3 text-foreground transition-colors duration-300 rounded-md disabled:opacity-50"
                     />
                   </div>
 
@@ -129,13 +248,21 @@ const ContactPage = () => {
                     </label>
                     <textarea
                       rows={5}
-                      className="w-full bg-transparent border border-gold outline-none px-4 py-3 text-foreground transition-colors duration-300 resize-none rounded-md"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      disabled={isSubmitting}
+                      className="w-full bg-transparent border border-gold outline-none px-4 py-3 text-foreground transition-colors duration-300 resize-none rounded-md disabled:opacity-50"
                       placeholder="Send in an order, or request..."
                     />
                   </div>
 
-                  <button type="submit" className="btn-primary w-full">
-                    Send Message
+                  <button
+                    type="submit"
+                    className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>
                 </form>
               </div>
