@@ -4,7 +4,7 @@ import Navigation from '../../../components/navigation';
 import Footer from '../../../components/footer';
 import imageLoader from '@/lib/imageLoader';
 import { motion } from 'framer-motion';
-import { FormEvent, useState } from 'react';
+import { useContactForm } from '@/hooks/useContactForm';
 
 const ContactPage = () => {
   const heroImageUrl = imageLoader({ src: '/v1755236122/mirage/fv7qgb3ihskuxhus2mkm.jpg', width: 1920 });
@@ -26,93 +26,16 @@ const ContactPage = () => {
     }
   ];
 
-  // Form state
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: ''
+  const {
+    formData,
+    isSubmitting,
+    submitSuccess,
+    submitError,
+    handleSubmit,
+    handleInputChange,
+  } = useContactForm({
+    endpoint: 'https://mfss.aptusagency.com/submit/5BM7Q3Hqy4'
   });
-
-  // Submission states
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState('');
-
-  // Validation
-  const validateForm = () => {
-    if (!formData.firstName.trim()) {
-      setSubmitError('First name is required');
-      return false;
-    }
-    if (!formData.lastName.trim()) {
-      setSubmitError('Last name is required');
-      return false;
-    }
-    if (!formData.email.trim()) {
-      setSubmitError('Email is required');
-      return false;
-    }
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setSubmitError('Please enter a valid email address');
-      return false;
-    }
-    if (!formData.message.trim()) {
-      setSubmitError('Message is required');
-      return false;
-    }
-    return true;
-  };
-
-  const handleSubmit = async (form: FormEvent<HTMLFormElement>) => {
-    form.preventDefault();
-    setSubmitError('');
-    setSubmitSuccess(false);
-
-    // Validate form
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('https://mfss.aptusagency.com/submit/5BM7Q3Hqy4', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
-      }
-
-      // Success - reset form and show success message
-      setSubmitSuccess(true);
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        message: ''
-      });
-    } catch (error) {
-      setSubmitError('Failed to send message. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
 
   return (
     <>
