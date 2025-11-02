@@ -79,7 +79,7 @@ const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://mfss.aptusagency.com/submit/5BM7Q3Hqy4', {
+      const response = await fetch('https://mfss.aptusagency.com/submit/5BM7Q3Hqy4', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
